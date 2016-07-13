@@ -4,42 +4,32 @@ import { connect } from 'react-redux';
 class MovieList extends Component {
   renderMovies(movieData){
     console.log("movieData: ",movieData);
-    const title = movieData.Title;
-    const director = movieData.Director;
-    const released = movieData.Released;
-    const plot = movieData.Plot;
-    const poster = movieData.Poster;
-
-//    const temps = movieData.list.map(weather => weather.main.temp)
-  //  console.log(temps);
-
+    if (movieData.Response === "True"){
+      const movieArray = []
+      const myList = movieData.Search.map((mov) => {
+        movieArray.push(
+          <div className="ml-item" key={mov.imdbID}>
+          <div>{mov.Title}</div>
+          <div>{mov.Year}</div>
+          <div><img src={mov.Poster}/></div>
+          </div>
+        )
+      })
+      return movieArray;
+    } else {
       return (
-        <tr key={title}>
-          <td>{title}</td>
-          <td>{director}</td>
-          <td>{released}</td>
-          <td>{plot}</td>
-          <td><img src={poster} /></td>
-        </tr>
+        <div className="error" key={movieData.Error}>Sorry Movie Not Found!</div>
       )
+    }
+
+
   }
 
   render() {
     return (
-      <table className="table table-hover">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Director</th>
-            <th>Released</th>
-            <th>Plot</th>
-            <th>Poster</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div className="movie-list-container">
           {this.props.movie.map(this.renderMovies)}
-        </tbody>
-      </table>
+      </div>
     )
   }
 }

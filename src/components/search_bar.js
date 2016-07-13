@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchShows } from '../actions/index';
+import { fetchAllMovies } from '../actions/index';
 
 class SearchBar extends Component {
   constructor(props){
@@ -19,7 +20,7 @@ class SearchBar extends Component {
   onFormSubmit(event){
     event.preventDefault();
 
-    this.props.fetchShows(this.state.term);
+    this.props.fetchAllMovies(this.state.term);
     this.setState({ term: '' });
   }
 
@@ -42,7 +43,7 @@ class SearchBar extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchShows}, dispatch)
+  return bindActionCreators({fetchShows, fetchAllMovies}, dispatch)
 }
 
 export default connect(null, mapDispatchToProps)(SearchBar);
